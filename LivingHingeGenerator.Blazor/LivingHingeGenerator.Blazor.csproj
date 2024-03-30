@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.3" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LivingHingeGenerator.Lib\LivingHingeGenerator.Lib.csproj" />
+  </ItemGroup>
+
 </Project>
