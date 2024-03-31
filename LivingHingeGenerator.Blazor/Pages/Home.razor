@@ -1,11 +1,16 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Generate Living Hinge</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Generate Living Hinge</h1>
 
-<p>Welcome to your new app.</p>
+@if (Loading)
+{
+    <p>Loading...</p>
+}
 
-<p>@Message</p>
+<button disabled="@Loading" @onclick="Generate">Generate Now</button>
 
-<button @onclick="Generate">Generate</button>
+<pre>
+@SvgAsText
+</pre>

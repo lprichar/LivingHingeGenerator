@@ -18,6 +18,16 @@ public class SvgMaker
         svgDoc.Write(outFile);
     }
 
+    public string GetSvAsString()
+    {
+        SvgDocument svgDoc = GetDashyRectangularSvgDocument();
+        using var stream = new MemoryStream();
+        svgDoc.Write(stream);
+        stream.Position = 0; // Reset stream position to read from the beginning
+        using var reader = new StreamReader(stream);
+        return reader.ReadToEnd();
+    }
+
     private static SvgDocument GetDashyRectangularSvgDocument()
     {
         var svgDoc = new SvgDocument
