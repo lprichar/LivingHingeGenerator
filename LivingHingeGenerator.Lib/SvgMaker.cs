@@ -11,11 +11,11 @@ public class SvgMaker(decimal heightInInches, decimal widthInInches)
     private SvgUnit Height { get; } = new(SvgUnitType.Inch, (float)heightInInches);
     private SvgUnit Width { get; } = new(SvgUnitType.Inch, (float)widthInInches);
 
-    public void WriteToDisk()
+    public void WriteToDisk(string fileName)
     {
         SvgDocument svgDoc = GetDashyRectangularSvgDocument();
         var currentDirectory = Directory.GetCurrentDirectory();
-        var outFile = Path.Combine(currentDirectory, "out.svg");
+        var outFile = Path.Combine(currentDirectory, fileName);
         svgDoc.Write(outFile);
     }
 
