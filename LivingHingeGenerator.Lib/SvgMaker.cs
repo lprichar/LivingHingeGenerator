@@ -5,10 +5,10 @@ namespace LivingHingeGenerator.Lib;
 
 public class SvgMaker(decimal heightInInches, decimal widthInInches)
 {
-    const int DistanceBetweenDashes = 20;
-    const int SpaceBetweenDashes = 5;
-    const int Height = 115;
-    const int Width = 392;
+    private static readonly SvgUnit DistanceBetweenDashes = new(SvgUnitType.Pixel, 20);
+    private static readonly SvgUnit SpaceBetweenDashes = new(SvgUnitType.Pixel, 5);
+    private static readonly SvgUnit Height = new(SvgUnitType.Pixel, 115);
+    private static readonly SvgUnit Width = new(SvgUnitType.Pixel, 392);
 
     public void WriteToDisk()
     {
@@ -38,16 +38,16 @@ public class SvgMaker(decimal heightInInches, decimal widthInInches)
         };
         var linesGroup = new SvgGroup();
         svgDoc.Children.Add(linesGroup);
-        const int horizontalSpaceBetweenLines = 5;
-        int numberOfLines = (Width / horizontalSpaceBetweenLines) + 1;
+        SvgUnit horizontalSpaceBetweenLines = new SvgUnit(SvgUnitType.Pixel, 5);
+        int numberOfLines = (int)(Width / horizontalSpaceBetweenLines) + 1;
 
-        const int offset = DistanceBetweenDashes / 2;
+        SvgUnit offset = DistanceBetweenDashes / 2;
         for (int i = 0; i < numberOfLines; i++)
         {
-            int startX = i * horizontalSpaceBetweenLines;
+            SvgUnit startX = i * horizontalSpaceBetweenLines;
             bool isOffset = i % 2 == 0;
-            int startY = isOffset ? -offset : 0;
-            int thisHeight = isOffset ? Height + offset : Height;
+            SvgUnit startY = isOffset ? -offset : 0;
+            SvgUnit thisHeight = isOffset ? Height + offset : Height;
             MakeDashy(linesGroup, startX, startY, thisHeight);
         }
 
@@ -65,9 +65,9 @@ public class SvgMaker(decimal heightInInches, decimal widthInInches)
         return svgDoc;
     }
 
-    private static void MakeDashy(SvgGroup group, int startX, int startY, int height)
+    private static void MakeDashy(SvgGroup group, SvgUnit startX, SvgUnit startY, SvgUnit height)
     {
-        int numberOfLines = (height / DistanceBetweenDashes) + 1;
+        int numberOfLines = (int)(height / DistanceBetweenDashes) + 1;
         for (int i = 0; i < numberOfLines; i++)
         {
             group.Children.Add(new SvgLine

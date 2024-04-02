@@ -22,9 +22,9 @@ public partial class Home
         try
         {
             // calculate width from diameter aka C=PiD;
-            var width = DiameterInInches * (decimal)Math.PI;
+            var widthInInches = DiameterInInches * (decimal)Math.PI;
 
-            var svgMaker = new SvgMaker(HeightInInches, width);
+            var svgMaker = new SvgMaker(HeightInInches, widthInInches);
             var svAsString = svgMaker.GetSvAsString();
             SvgAsText = svAsString;
             object[] args = ["out.svg", svAsString];
