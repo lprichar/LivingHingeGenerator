@@ -5,10 +5,11 @@ namespace LivingHingeGenerator.Lib;
 
 public class SvgMaker(decimal heightInInches, decimal widthInInches)
 {
-    private static readonly SvgUnit DistanceBetweenDashes = new(SvgUnitType.Pixel, 20);
-    private static readonly SvgUnit SpaceBetweenDashes = new(SvgUnitType.Pixel, 5);
-    private static readonly SvgUnit Height = new(SvgUnitType.Pixel, 115);
-    private static readonly SvgUnit Width = new(SvgUnitType.Pixel, 392);
+    private static readonly SvgUnit DistanceBetweenDashes = new(SvgUnitType.Millimeter, 13);
+    private static readonly SvgUnit SpaceBetweenDashes = new(SvgUnitType.Millimeter, 6);
+    private static readonly SvgUnit HorizontalSpaceBetweenLines = new(SvgUnitType.Millimeter, 1);
+    private SvgUnit Height { get; } = new(SvgUnitType.Inch, (float)heightInInches);
+    private SvgUnit Width { get; } = new(SvgUnitType.Inch, (float)widthInInches);
 
     public void WriteToDisk()
     {
@@ -28,7 +29,7 @@ public class SvgMaker(decimal heightInInches, decimal widthInInches)
         return reader.ReadToEnd();
     }
 
-    private static SvgDocument GetDashyRectangularSvgDocument()
+    private SvgDocument GetDashyRectangularSvgDocument()
     {
         var svgDoc = new SvgDocument
         {
@@ -38,13 +39,12 @@ public class SvgMaker(decimal heightInInches, decimal widthInInches)
         };
         var linesGroup = new SvgGroup();
         svgDoc.Children.Add(linesGroup);
-        SvgUnit horizontalSpaceBetweenLines = new SvgUnit(SvgUnitType.Pixel, 5);
-        int numberOfLines = (int)(Width / horizontalSpaceBetweenLines) + 1;
+        int numberOfLines = (int)(Width / HorizontalSpaceBetweenLines) + 1;
 
         SvgUnit offset = DistanceBetweenDashes / 2;
         for (int i = 0; i < numberOfLines; i++)
         {
-            SvgUnit startX = i * horizontalSpaceBetweenLines;
+            SvgUnit startX = i * HorizontalSpaceBetweenLines;
             bool isOffset = i % 2 == 0;
             SvgUnit startY = isOffset ? -offset : 0;
             SvgUnit thisHeight = isOffset ? Height + offset : Height;
