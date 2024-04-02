@@ -3,7 +3,7 @@ using Svg;
 
 namespace LivingHingeGenerator.Lib;
 
-public class SvgMaker
+public class SvgMaker(decimal heightInInches, decimal widthInInches)
 {
     const int DistanceBetweenDashes = 20;
     const int SpaceBetweenDashes = 5;
@@ -38,13 +38,13 @@ public class SvgMaker
         };
         var linesGroup = new SvgGroup();
         svgDoc.Children.Add(linesGroup);
-        const int HorizontalSpaceBetweenLines = 5;
-        int numberOfLines = (Width / HorizontalSpaceBetweenLines) + 1;
+        const int horizontalSpaceBetweenLines = 5;
+        int numberOfLines = (Width / horizontalSpaceBetweenLines) + 1;
 
         const int offset = DistanceBetweenDashes / 2;
         for (int i = 0; i < numberOfLines; i++)
         {
-            int startX = i * HorizontalSpaceBetweenLines;
+            int startX = i * horizontalSpaceBetweenLines;
             bool isOffset = i % 2 == 0;
             int startY = isOffset ? -offset : 0;
             int thisHeight = isOffset ? Height + offset : Height;

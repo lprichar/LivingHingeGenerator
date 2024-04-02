@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 
 <PageTitle>Generate Living Hinge</PageTitle>
 
@@ -8,6 +8,14 @@
 {
     <p>Loading...</p>
 }
+
+<label for="height">HeightInInches:</label>
+<input type="number" id="height" @bind="HeightInInches" />
+
+<br />
+
+<label for="diameter">DiameterInInches:</label>
+<input type="number" id="diameter" @bind="DiameterInInches" />
 
 <button disabled="@Loading" @onclick="Generate">Generate Now</button>
 
