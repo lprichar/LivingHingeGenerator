@@ -45,8 +45,8 @@ public class SvgMaker(decimal heightInInches, decimal widthInInches)
         for (int i = 0; i < numberOfLines; i++)
         {
             SvgUnit startX = i * HorizontalSpaceBetweenLines;
-            bool isOffset = i % 2 == 0;
-            SvgUnit startY = isOffset ? -offset : 0;
+            bool isOffset = i % 2 == 1;
+            SvgUnit startY = isOffset ? offset : 0;
             SvgUnit thisHeight = isOffset ? Height + offset : Height;
             MakeDashy(linesGroup, startX, startY, thisHeight);
         }
@@ -65,17 +65,19 @@ public class SvgMaker(decimal heightInInches, decimal widthInInches)
         return svgDoc;
     }
 
-    private static void MakeDashy(SvgGroup group, SvgUnit startX, SvgUnit startY, SvgUnit height)
+    private static void MakeDashy(SvgGroup group, SvgUnit x, SvgUnit startY, SvgUnit height)
     {
         int numberOfLines = (int)(height / DistanceBetweenDashes) + 1;
         for (int i = 0; i < numberOfLines; i++)
         {
+            var dashStartY = startY + i * DistanceBetweenDashes;
+            var dashEndY = startY + (((i + 1) * DistanceBetweenDashes) - SpaceBetweenDashes);
             group.Children.Add(new SvgLine
             {
-                StartX = startX,
-                StartY = startY + i * DistanceBetweenDashes,
-                EndX = startX,
-                EndY = startY + (((i + 1) * DistanceBetweenDashes) - SpaceBetweenDashes),
+                StartX = x,
+                StartY = dashStartY,
+                EndX = x,
+                EndY = dashEndY,
                 Stroke = new SvgColourServer(Color.Red),
             });
         }
