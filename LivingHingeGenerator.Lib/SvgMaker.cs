@@ -70,7 +70,7 @@ public class SvgMaker(decimal heightInInches, decimal widthInInches)
             SvgUnit startX = (i + 1) * HorizontalSpaceBetweenLines;
             bool isOffset = i % 2 == 1;
             SvgUnit startY = isOffset ? offset : 0;
-            SvgUnit thisHeight = isOffset ? Height + offset : Height;
+            SvgUnit thisHeight = isOffset ? Height - offset : Height;
             MakeDashy(linesGroup, startX, startY, thisHeight);
         }
 
@@ -79,8 +79,8 @@ public class SvgMaker(decimal heightInInches, decimal widthInInches)
 
     private static void MakeDashy(SvgGroup group, SvgUnit x, SvgUnit startY, SvgUnit height)
     {
-        int numberOfLines = (int)(height / DistanceBetweenDashes) + 1;
-        for (int i = 0; i < numberOfLines; i++)
+        int numberOfDashes = (int)(height / DistanceBetweenDashes) + 1;
+        for (int i = 0; i < numberOfDashes; i++)
         {
             var dashStartY = startY + i * DistanceBetweenDashes;
             var dashEndY = startY + (((i + 1) * DistanceBetweenDashes) - SpaceBetweenDashes);
