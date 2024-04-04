@@ -5,8 +5,21 @@ namespace LivingHingeGenerator.Lib;
 
 public class SvgMaker(decimal heightInInches, decimal widthInInches)
 {
-    private static readonly SvgUnit DistanceBetweenDashes = new(SvgUnitType.Millimeter, 13);
+    /// <summary>
+    /// The distance from the end of one dash to the start of the next dash
+    /// </summary>
     private static readonly SvgUnit SpaceBetweenDashes = new(SvgUnitType.Millimeter, 6);
+    
+    /// <summary>
+    /// Height of a dash
+    /// </summary>
+    private static readonly SvgUnit DashHeight = new(SvgUnitType.Millimeter, 11);
+
+    /// <summary>
+    /// The distance from the top of one dash to the top of the next dash
+    /// </summary>
+    private static readonly SvgUnit DistanceBetweenDashes = SpaceBetweenDashes + DashHeight;
+
     private static readonly SvgUnit HorizontalSpaceBetweenLines = new(SvgUnitType.Millimeter, 1);
     private SvgUnit Height { get; } = new(SvgUnitType.Inch, (float)heightInInches);
     private SvgUnit Width { get; } = new(SvgUnitType.Inch, (float)widthInInches);
