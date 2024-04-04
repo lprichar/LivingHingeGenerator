@@ -37,8 +37,18 @@ public class SvgMaker(decimal heightInInches, decimal widthInInches)
             Height = Height,
             ViewBox = new SvgViewBox(0, 0, Width, Height),
         };
-        var linesGroup = new SvgGroup();
+
+        var linesGroup = MakeLinesGroup();
         svgDoc.Children.Add(linesGroup);
+
+        var outerBox = MakeOuterBox();
+        svgDoc.Children.Add(outerBox);
+        return svgDoc;
+    }
+
+    private SvgGroup MakeLinesGroup()
+    {
+        var linesGroup = new SvgGroup();
         int numberOfLines = (int)(Width / HorizontalSpaceBetweenLines) + 1;
 
         SvgUnit offset = DistanceBetweenDashes / 2;
@@ -51,18 +61,7 @@ public class SvgMaker(decimal heightInInches, decimal widthInInches)
             MakeDashy(linesGroup, startX, startY, thisHeight);
         }
 
-        var boxGroup = new SvgGroup();
-        svgDoc.Children.Add(boxGroup);
-        boxGroup.Children.Add(new SvgRectangle()
-        {
-            X = 0,
-            Y = 0,
-            Width = Width,
-            Height = Height,
-            Stroke = new SvgColourServer(Color.Blue),
-            Fill = SvgPaintServer.None
-        });
-        return svgDoc;
+        return linesGroup;
     }
 
     private static void MakeDashy(SvgGroup group, SvgUnit x, SvgUnit startY, SvgUnit height)
@@ -72,14 +71,30 @@ public class SvgMaker(decimal heightInInches, decimal widthInInches)
         {
             var dashStartY = startY + i * DistanceBetweenDashes;
             var dashEndY = startY + (((i + 1) * DistanceBetweenDashes) - SpaceBetweenDashes);
-            group.Children.Add(new SvgLine
+            var dash = new SvgLine
             {
                 StartX = x,
                 StartY = dashStartY,
                 EndX = x,
                 EndY = dashEndY,
                 Stroke = new SvgColourServer(Color.Red),
-            });
+            };
+            group.Children.Add(dash);
         }
+    }
+
+    private SvgGroup MakeOuterBox()
+    {
+        var boxGroup = new SvgGroup();
+        boxGroup.Children.Add(new SvgRectangle()
+        {
+            X = 0,
+            Y = 0,
+            Width = Width,
+            Height = Height,
+            Stroke = new SvgColourServer(Color.Blue),
+            Fill = SvgPaintServer.None
+        });
+        return boxGroup;
     }
 }
