@@ -49,12 +49,12 @@ public class SvgMaker(decimal heightInInches, decimal widthInInches)
     private SvgGroup MakeLinesGroup()
     {
         var linesGroup = new SvgGroup();
-        int numberOfLines = (int)(Width / HorizontalSpaceBetweenLines) + 1;
+        int numberOfLines = (int)(Width / HorizontalSpaceBetweenLines);
 
         SvgUnit offset = DistanceBetweenDashes / 2;
         for (int i = 0; i < numberOfLines; i++)
         {
-            SvgUnit startX = i * HorizontalSpaceBetweenLines;
+            SvgUnit startX = (i + 1) * HorizontalSpaceBetweenLines;
             bool isOffset = i % 2 == 1;
             SvgUnit startY = isOffset ? offset : 0;
             SvgUnit thisHeight = isOffset ? Height + offset : Height;
